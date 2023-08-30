@@ -4,7 +4,8 @@ module JAVAFX.PROJEKTI {
     requires javafx.graphics;
     requires javafx.web;
 
-    opens com.zubaku;
     opens com.zubaku.controller;
+    opens com.zubaku.application;
+    opens com.zubaku.processors;
 
 }

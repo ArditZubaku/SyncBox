@@ -1,23 +1,17 @@
 package com.zubaku.application;
 
+import com.zubaku.processors.EmailProcessor;
+import com.zubaku.processors.ViewProcessor;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.util.Objects;
 
 public class Launcher extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-//        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("view/LoginWindow.fxml")));
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("view/MainWindow.fxml")));
 
-        Scene scene = new Scene(parent, 870, 597);
+        ViewProcessor viewProcessor = new ViewProcessor(new EmailProcessor());
+        viewProcessor.showLoginWindow();
 
-        stage.setScene(scene);
-        stage.show();
     }
 
     public static void main(String[] args) {
