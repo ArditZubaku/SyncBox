@@ -1,4 +1,4 @@
-package com.zubaku;
+package com.zubaku.application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
