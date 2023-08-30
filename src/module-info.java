@@ -5,6 +5,6 @@ module JAVAFX.PROJEKTI {
     requires javafx.web;
 
     opens com.zubaku;
-    opens com.zubaku.view;
+    opens com.zubaku.controller;
 
 }
