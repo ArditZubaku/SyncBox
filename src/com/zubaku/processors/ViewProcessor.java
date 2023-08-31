@@ -3,7 +3,6 @@ package com.zubaku.processors;
 import com.zubaku.controller.BaseController;
 import com.zubaku.controller.LoginWindowController;
 import com.zubaku.controller.MainWindowController;
-import com.zubaku.processors.EmailProcessor;
 import com.zubaku.utils.FXMLFile;
 import com.zubaku.utils.Paths;
 import javafx.fxml.FXMLLoader;
@@ -15,15 +14,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import java.io.IOException;
-
 public class ViewProcessor {
-    // To generate scenes
-    // User actions like close a scene or something
-    // To update CSS
-    // etc
     private static final Logger LOGGER = Logger.getLogger(ViewProcessor.class.getName());
-
 
     private final EmailProcessor emailProcessor;
 
@@ -64,6 +56,11 @@ public class ViewProcessor {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    public void closeStage(Stage stage){
+        LOGGER.log(Level.INFO, "Closed the stage");
+        stage.close();
     }
 
 }
