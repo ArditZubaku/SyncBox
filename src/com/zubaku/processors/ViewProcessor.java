@@ -14,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,14 +23,14 @@ public class ViewProcessor {
     private static final Logger LOGGER = Logger.getLogger(ViewProcessor.class.getName());
 
     private final EmailProcessor emailProcessor;
-
-    public ViewProcessor(EmailProcessor emailProcessor) {
-        this.emailProcessor = emailProcessor;
-    }
-
+    private final List<Stage> activeStages;
     // View options handling:
     private ColorTheme colorTheme = ColorTheme.DEFAULT;
     private FontSize fontSize = FontSize.MEDIUM;
+    public ViewProcessor(EmailProcessor emailProcessor) {
+        this.emailProcessor = emailProcessor;
+        this.activeStages = new ArrayList<>();
+    }
 
     public ColorTheme getColorTheme() {
         return colorTheme;
@@ -86,11 +88,24 @@ public class ViewProcessor {
         stage.setScene(scene);
         stage.show();
 
+        activeStages.add(stage);
+
     }
 
-    public void closeStage(Stage stage){
+    public void closeStage(Stage stage) {
         LOGGER.log(Level.INFO, "Closed the stage");
         stage.close();
+        activeStages.remove(stage);
+
     }
 
+    public void updateStyles() {
+        // In JavaFX styles are applied to scenes => we need list of all active scenese
+
+        for (Stage stage : activeStages) {
+            Scene scene = stage.getScene();
+            // TODO: handle the CSS
+        }
+
+    }
 }

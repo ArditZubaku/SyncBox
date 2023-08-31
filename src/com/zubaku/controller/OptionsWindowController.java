@@ -33,6 +33,9 @@ public class OptionsWindowController extends BaseController implements Initializ
         viewProcessor.setColorTheme(themePicker.getValue());
         // Get the font size
         viewProcessor.setFontSize(FontSize.values()[(int) fontSizePicker.getValue()]);
+        // Update CSS styles
+        viewProcessor.updateStyles();
+
     }
 
     @FXML
