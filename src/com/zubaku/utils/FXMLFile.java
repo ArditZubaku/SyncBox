@@ -2,7 +2,8 @@ package com.zubaku.utils;
 
 public enum FXMLFile {
     LoginWindow("LoginWindow.fxml"),
-    MainWindow("MainWindow.fxml");
+    MainWindow("MainWindow.fxml"),
+    OptionsWindow("OptionsWindow.fxml");
 
     private final String fxmlFile;
 

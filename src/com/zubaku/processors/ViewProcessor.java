@@ -3,6 +3,7 @@ package com.zubaku.processors;
 import com.zubaku.controller.BaseController;
 import com.zubaku.controller.LoginWindowController;
 import com.zubaku.controller.MainWindowController;
+import com.zubaku.controller.OptionsWindowController;
 import com.zubaku.utils.FXMLFile;
 import com.zubaku.utils.Paths;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +35,13 @@ public class ViewProcessor {
         System.out.println("showMainWindow invoked.");
 
         BaseController controller = new MainWindowController(emailProcessor, this, FXMLFile.MainWindow.toString());
+        initializeStage(controller);
+    }
+
+    public void showOptionsWindow() {
+        System.out.println("showOptionsWindow invoked.");
+
+        BaseController controller = new OptionsWindowController(emailProcessor, this, FXMLFile.OptionsWindow.toString());
         initializeStage(controller);
     }
 

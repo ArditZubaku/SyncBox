@@ -2,7 +2,6 @@ package com.zubaku.controller;
 
 import com.zubaku.processors.EmailProcessor;
 import com.zubaku.processors.ViewProcessor;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeView;
@@ -24,8 +23,8 @@ public class MainWindowController extends BaseController{
     }
 
     @FXML
-    void optionsAction(ActionEvent event) {
-
+    void optionsAction() {
+        viewProcessor.showOptionsWindow();
     }
 
 }
