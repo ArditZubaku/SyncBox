@@ -4,7 +4,9 @@ import com.zubaku.controller.BaseController;
 import com.zubaku.controller.LoginWindowController;
 import com.zubaku.controller.MainWindowController;
 import com.zubaku.controller.OptionsWindowController;
+import com.zubaku.utils.ColorTheme;
 import com.zubaku.utils.FXMLFile;
+import com.zubaku.utils.FontSize;
 import com.zubaku.utils.Paths;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +24,26 @@ public class ViewProcessor {
 
     public ViewProcessor(EmailProcessor emailProcessor) {
         this.emailProcessor = emailProcessor;
+    }
+
+    // View options handling:
+    private ColorTheme colorTheme = ColorTheme.DEFAULT;
+    private FontSize fontSize = FontSize.MEDIUM;
+
+    public ColorTheme getColorTheme() {
+        return colorTheme;
+    }
+
+    public void setColorTheme(ColorTheme colorTheme) {
+        this.colorTheme = colorTheme;
+    }
+
+    public FontSize getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(FontSize fontSize) {
+        this.fontSize = fontSize;
     }
 
     public void showLoginWindow() {
