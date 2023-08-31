@@ -3,6 +3,7 @@ module JAVAFX.PROJEKTI {
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.web;
+    requires java.logging;
 
     opens com.zubaku.controller;
     opens com.zubaku.application;

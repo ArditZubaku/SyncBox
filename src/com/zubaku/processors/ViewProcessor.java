@@ -9,6 +9,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import java.io.IOException;
 
@@ -17,6 +20,8 @@ public class ViewProcessor {
     // User actions like close a scene or something
     // To update CSS
     // etc
+    private static final Logger LOGGER = Logger.getLogger(ViewProcessor.class.getName());
+
 
     private EmailProcessor emailProcessor;
 
@@ -37,7 +42,7 @@ public class ViewProcessor {
         try {
             parent = loader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "An error occurred while loading parent", e);
             return;
         }
 
