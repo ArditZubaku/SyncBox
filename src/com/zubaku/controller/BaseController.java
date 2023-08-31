@@ -5,8 +5,8 @@ import com.zubaku.processors.ViewProcessor;
 
 public abstract class BaseController {
 
-    private EmailProcessor emailProcessor;
-    private ViewProcessor viewProcessor;
+    protected EmailProcessor emailProcessor;
+    protected ViewProcessor viewProcessor;
     private String fxmlName;
 
     public BaseController(EmailProcessor emailProcessor, ViewProcessor viewProcessor, String fxmlName) {
