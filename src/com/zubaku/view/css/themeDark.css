@@ -1,0 +1,8 @@
+.big {
+    -fx-text-fill: #ffffff;
+}
+
+* {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
