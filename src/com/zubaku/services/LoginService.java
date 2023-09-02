@@ -3,11 +3,16 @@ package com.zubaku.services;
 import com.zubaku.models.EmailAccount;
 import com.zubaku.processors.EmailProcessor;
 import com.zubaku.utils.LoginResult;
-import javafx.concurrent.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javax.mail.*;
 
 public class LoginService extends Service<LoginResult> {
+
+  private static final Logger LOGGER =
+      Logger.getLogger(LoginService.class.getName());
 
   EmailAccount account;
   EmailProcessor processor;
@@ -37,26 +42,21 @@ public class LoginService extends Service<LoginResult> {
     };
 
     try {
-
-      Thread.sleep(6000);
-
       Session session =
           Session.getInstance(account.getProperties(), authenticator);
       Store store = session.getStore("imaps");
       store.connect(account.getProperties().getProperty("incomingHost"),
                     account.getEmail(), account.getPassword());
       account.setStore(store);
+      processor.addEmailAccount(account);
     } catch (NoSuchProviderException e) {
-      e.printStackTrace();
+      LOGGER.log(Level.SEVERE, "FAILED_BY_NETWORK", e);
       return LoginResult.FAILED_BY_NETWORK;
     } catch (AuthenticationFailedException e) {
-      e.printStackTrace();
+      LOGGER.log(Level.SEVERE, "FAILED_BY_CREDENTIALS", e);
       return LoginResult.FAILED_BY_CREDENTIALS;
-    } catch (MessagingException e) {
-      e.printStackTrace();
-      return LoginResult.FAILED_BY_UNEXPECTED_ERROR;
     } catch (Exception e) {
-      e.printStackTrace();
+      LOGGER.log(Level.SEVERE, "FAILED_BY_UNEXPECTED_ERROR", e);
       return LoginResult.FAILED_BY_UNEXPECTED_ERROR;
     }
     return LoginResult.SUCCESS;
