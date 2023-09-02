@@ -25,6 +25,8 @@ public class ViewProcessor {
 
   private final EmailProcessor emailProcessor;
   private final List<Stage> activeStages;
+  public boolean mainViewInitialized = false;
+
   // View options handling:
   private ColorTheme colorTheme = ColorTheme.LIGHT;
   private FontSize fontSize = FontSize.MEDIUM;
@@ -58,6 +60,7 @@ public class ViewProcessor {
     BaseController controller = new MainWindowController(
         emailProcessor, this, FXMLFile.MainWindow.toString());
     initializeStage(controller);
+    mainViewInitialized = true;
   }
 
   public void showOptionsWindow() {
@@ -90,6 +93,8 @@ public class ViewProcessor {
 
     activeStages.add(stage);
   }
+
+  public boolean isMainViewInitialized() { return mainViewInitialized; }
 
   public void closeStage(Stage stage) {
     LOGGER.log(Level.INFO, "Closed the stage");

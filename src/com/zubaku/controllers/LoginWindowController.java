@@ -43,16 +43,15 @@ public class LoginWindowController
       LoginService service = new LoginService(account, emailProcessor);
       // Start will do all the background tasks
       service.start();
-    // After finishing the tasks
+      // After finishing the tasks
             service.setOnSucceeded(event -> {
         LoginResult result = service.getValue();
         switch (result) {
                     case SUCCESS -> {
-                        viewProcessor.showMainWindow();
+                        if (!viewProcessor.isMainViewInitialized()) viewProcessor.showMainWindow();
                         // Getting the stage of the LoginWindowController in a workaround way:
                         Stage stage = (Stage) emailAddressField.getScene().getWindow();
                         viewProcessor.closeStage(stage);
-                        return;
                     }
                     case FAILED_BY_CREDENTIALS -> errorLabel.setText("Invalid Credentials");
                     case FAILED_BY_NETWORK -> errorLabel.setText("Check Your Network Connection");
