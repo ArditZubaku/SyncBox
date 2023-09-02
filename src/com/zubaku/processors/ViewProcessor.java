@@ -26,7 +26,7 @@ public class ViewProcessor {
     private final EmailProcessor emailProcessor;
     private final List<Stage> activeStages;
     // View options handling:
-    private ColorTheme colorTheme = ColorTheme.DEFAULT;
+    private ColorTheme colorTheme = ColorTheme.DARK;
     private FontSize fontSize = FontSize.MEDIUM;
 
     public ViewProcessor(EmailProcessor emailProcessor) {
@@ -104,7 +104,7 @@ public class ViewProcessor {
 
     public void updateStyles() {
         // In JavaFX styles are applied to scenes => we need list of all active scenes
-        
+
         for (Stage stage : activeStages) {
             Scene scene = stage.getScene();
             // handling the CSS

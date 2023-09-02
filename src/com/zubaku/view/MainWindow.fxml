@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.WebView?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="597.0" prefWidth="870.0"
-            xmlns="http://javafx.com/javafx/20.0.1">
+            xmlns="http://javafx.com/javafx/17.0.2-ea">
     <children>
         <MenuBar prefHeight="28.0" prefWidth="871.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                  AnchorPane.topAnchor="0.0">
@@ -13,6 +13,7 @@
                     <items>
                         <MenuItem mnemonicParsing="false" text="Open"/>
                         <MenuItem mnemonicParsing="false" text="Close"/>
+                        <MenuItem mnemonicParsing="false" onAction="#addAccountAction" text="Add account"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">

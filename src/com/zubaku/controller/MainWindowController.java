@@ -7,7 +7,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.web.WebView;
 
-public class MainWindowController extends BaseController{
+public class MainWindowController extends BaseController {
 
     @FXML
     private TableView<?> emailTableView;
@@ -25,6 +25,11 @@ public class MainWindowController extends BaseController{
     @FXML
     void optionsAction() {
         viewProcessor.showOptionsWindow();
+    }
+
+    @FXML
+    void addAccountAction() {
+        viewProcessor.showLoginWindow();
     }
 
 }
