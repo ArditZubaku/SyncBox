@@ -1,4 +1,4 @@
-package com.zubaku.controller;
+package com.zubaku.controllers;
 
 import com.zubaku.processors.EmailProcessor;
 import com.zubaku.processors.ViewProcessor;
@@ -8,7 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LoginWindowController extends BaseController{
+public class LoginWindowController extends BaseController {
 
     @FXML
     private TextField emailAddressField;

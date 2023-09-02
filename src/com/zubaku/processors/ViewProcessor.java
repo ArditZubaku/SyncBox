@@ -1,9 +1,9 @@
 package com.zubaku.processors;
 
-import com.zubaku.controller.BaseController;
-import com.zubaku.controller.LoginWindowController;
-import com.zubaku.controller.MainWindowController;
-import com.zubaku.controller.OptionsWindowController;
+import com.zubaku.controllers.BaseController;
+import com.zubaku.controllers.LoginWindowController;
+import com.zubaku.controllers.MainWindowController;
+import com.zubaku.controllers.OptionsWindowController;
 import com.zubaku.utils.ColorTheme;
 import com.zubaku.utils.FXMLFile;
 import com.zubaku.utils.FontSize;

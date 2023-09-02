@@ -1,4 +1,4 @@
-package com.zubaku.controller;
+package com.zubaku.controllers;
 
 import com.zubaku.processors.EmailProcessor;
 import com.zubaku.processors.ViewProcessor;
