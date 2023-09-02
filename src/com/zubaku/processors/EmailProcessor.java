@@ -1,22 +1,22 @@
 package com.zubaku.processors;
 
 import com.zubaku.models.EmailAccount;
-import javafx.scene.control.TreeItem;
+import com.zubaku.models.EmailTreeItem;
+import com.zubaku.services.FetchFoldersService;
 
 public class EmailProcessor {
   // To manage email actions
   // Folder handling
 
-  private TreeItem<String> foldersRoot = new TreeItem<String>("");
+  private EmailTreeItem<String> foldersRoot = new EmailTreeItem<>("");
 
-  public TreeItem<String> getFoldersRoot() { return foldersRoot; }
+  public EmailTreeItem<String> getFoldersRoot() { return foldersRoot; }
 
   public void addEmailAccount(EmailAccount account) {
-    TreeItem<String> treeItem = new TreeItem<String>(account.getEmail());
-    treeItem.setExpanded(true);
-    treeItem.getChildren().add(new TreeItem<String>("INBOX"));
-    treeItem.getChildren().add(new TreeItem<String>("SENT"));
-    treeItem.getChildren().add(new TreeItem<String>("SPAM"));
+    EmailTreeItem<String> treeItem = new EmailTreeItem<>(account.getEmail());
+    FetchFoldersService service =
+        new FetchFoldersService(account.getStore(), treeItem);
+    service.start();
     foldersRoot.getChildren().add(treeItem);
   }
 }
