@@ -1,11 +1,14 @@
 .big {
-    -fx-font-size: 30pt;
+    -fx-font-size: 10pt;
+    font-size: larger;
 }
 
 * {
-    -fx-background-color: #FFFFFF;
+    /* -fx-background-color: #FFFFFF; */
     -fx-text-fill: #333333;
 }
+
+
 
 Button, ChoiceBox, Slider {
     -fx-text-fill: white;

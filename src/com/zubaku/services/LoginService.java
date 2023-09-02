@@ -4,9 +4,12 @@ import com.zubaku.models.EmailAccount;
 import com.zubaku.processors.EmailProcessor;
 import com.zubaku.utils.LoginResult;
 
+import javafx.concurrent.*;
+import javafx.concurrent.Service;
+
 import javax.mail.*;
 
-public class LoginService {
+public class LoginService extends Service<LoginResult>{
 
     EmailAccount account;
     EmailProcessor processor;
@@ -16,7 +19,7 @@ public class LoginService {
         this.processor = processor;
     }
 
-    public LoginResult login() {
+    private LoginResult login() {
         Authenticator authenticator = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -25,6 +28,9 @@ public class LoginService {
         };
 
         try {
+
+            Thread.sleep(6000);
+
             Session session = Session.getInstance(account.getProperties(), authenticator);
             Store store = session.getStore("imaps");
             store.connect(
@@ -46,5 +52,15 @@ public class LoginService {
             return LoginResult.FAILED_BY_UNEXPECTED_ERROR;
         }
         return LoginResult.SUCCESS;
+    }
+
+    @Override
+    protected Task<LoginResult> createTask() {
+        return new Task<LoginResult>() {
+            @Override
+            protected LoginResult call() throws Exception {
+                return login();
+            }
+        };
     }
 }

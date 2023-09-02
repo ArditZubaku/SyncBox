@@ -14,8 +14,7 @@ public class Launcher extends Application {
     public void start(Stage stage) throws Exception {
 
         ViewProcessor viewProcessor = new ViewProcessor(new EmailProcessor());
-        viewProcessor.showOptionsWindow();
+        viewProcessor.showLoginWindow();
         viewProcessor.updateStyles();
-
     }
 }

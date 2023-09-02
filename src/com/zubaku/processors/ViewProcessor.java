@@ -26,7 +26,7 @@ public class ViewProcessor {
     private final EmailProcessor emailProcessor;
     private final List<Stage> activeStages;
     // View options handling:
-    private ColorTheme colorTheme = ColorTheme.DARK;
+    private ColorTheme colorTheme = ColorTheme.LIGHT;
     private FontSize fontSize = FontSize.MEDIUM;
 
     public ViewProcessor(EmailProcessor emailProcessor) {
