@@ -2,25 +2,18 @@ package com.zubaku.utils;
 
 public enum Paths {
 
-    ViewPackage("/com/zubaku/view/"),
+  ViewPackage("/com/zubaku/view/"),
 
-    ThemeLIGHT("css/themeLight.css"),
-    ThemeDARK("css/themeDark.css"),
-    ThemeDEFAULT("css/themeDefault.css"),
+  ThemeLIGHT("css/themeLight.css"),
+  ThemeDARK("css/themeDark.css"),
+  ThemeDEFAULT("css/themeDefault.css"),
 
-    FontSMALL("css/fontSmall.css"),
-    FontBIG("css/fontBig.css"),
-    FontMEDIUM("css/fontMedium.css");
+  FontSMALL("css/fontSmall.css"),
+  FontBIG("css/fontBig.css"),
+  FontMEDIUM("css/fontMedium.css");
 
-
-    private final String path;
-
-    Paths(String path) {
-        this.path = path;
-    }
-
-    public static String getThemeCSSPath(ColorTheme theme) {
-        return switch (theme) {
+  public static String getThemeCSSPath(ColorTheme theme) {
+    return switch (theme) {
             case LIGHT -> ViewPackage.path + ThemeLIGHT;
             case DARK -> ViewPackage.path + ThemeDARK;
             case DEFAULT -> ViewPackage.path + ThemeDEFAULT;
@@ -33,6 +26,12 @@ public enum Paths {
             case BIG -> ViewPackage.path + FontBIG;
             case MEDIUM -> ViewPackage.path + FontMEDIUM;
         };
+    }
+
+    private final String path;
+
+    Paths(String path) {
+        this.path = path;
     }
 
     @Override

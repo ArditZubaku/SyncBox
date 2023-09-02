@@ -1,41 +1,44 @@
 .big {
-    -fx-font-size: 30pt;
+  -fx-font-size: 30pt;
 }
 
 * {
-    -fx-background-color: #1b1b1b;
-    -fx-text-fill: #FFFFFF;
+  -fx-background-color: #1b1b1b;
+  -fx-text-fill: #ffffff;
 }
 
-Button, Label, ChoiceBox, Slider {
-    -fx-text-fill: #FFFFFF;
+Button,
+Label,
+ChoiceBox,
+Slider {
+  -fx-text-fill: #ffffff;
 }
 
 Button {
-    -fx-background-color: #006cff;
+  -fx-background-color: #006cff;
 }
 
 Button:hover {
-    -fx-background-color: #00C853;
+  -fx-background-color: #00c853;
 }
 
 /*Select all children elements*/
 ChoiceBox > * {
-    -fx-background-color: #001bcf;
+  -fx-background-color: #001bcf;
 }
 
 Slider .axis {
-    -fx-tick-label-fill: white;
+  -fx-tick-label-fill: white;
 }
 
 Slider .track {
-    -fx-background-color: white;
+  -fx-background-color: white;
 }
 
 Slider .track:hover {
-    -fx-background-color: #d4b7b7;
+  -fx-background-color: #d4b7b7;
 }
 
 Slider .thumb {
-    -fx-background-color: #00C853;
+  -fx-background-color: #00c853;
 }

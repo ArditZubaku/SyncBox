@@ -16,40 +16,37 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoginWindowController
-        extends BaseController implements Initializable {
+    extends BaseController implements Initializable {
 
-    @FXML
-    private TextField emailAddressField;
+  @FXML private TextField emailAddressField;
 
-    @FXML
-    private Label errorLabel;
+  @FXML private Label errorLabel;
 
-    @FXML
-    private PasswordField passwordField;
+  @FXML private PasswordField passwordField;
 
-    public LoginWindowController(EmailProcessor emailProcessor,
-            ViewProcessor viewProcessor, String fxmlName) {
-        super(emailProcessor, viewProcessor, fxmlName);
-    }
+  public LoginWindowController(EmailProcessor emailProcessor,
+                               ViewProcessor viewProcessor, String fxmlName) {
+    super(emailProcessor, viewProcessor, fxmlName);
+  }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        emailAddressField.setText(Credentials.EMAIL_ADDRESS());
-        passwordField.setText(Credentials.PASSWORD());
-    }
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    emailAddressField.setText(Credentials.EMAIL_ADDRESS());
+    passwordField.setText(Credentials.PASSWORD());
+  }
 
-    @FXML
-    void loginButtonAction() {
-        if (validFields()) {
-            EmailAccount account = new EmailAccount(emailAddressField.getText(),
-                    passwordField.getText());
-            LoginService service = new LoginService(account, emailProcessor);
-            // Start will do all the background tasks
-            service.start();
-            // After finishing the tasks
+  @FXML
+  void loginButtonAction() {
+    if (validFields()) {
+      EmailAccount account = new EmailAccount(emailAddressField.getText(),
+                                              passwordField.getText());
+      LoginService service = new LoginService(account, emailProcessor);
+      // Start will do all the background tasks
+      service.start();
+    // After finishing the tasks
             service.setOnSucceeded(event -> {
-                LoginResult result = service.getValue();
-                switch (result) {
+        LoginResult result = service.getValue();
+        switch (result) {
                     case SUCCESS -> {
                         viewProcessor.showMainWindow();
                         // Getting the stage of the LoginWindowController in a workaround way:

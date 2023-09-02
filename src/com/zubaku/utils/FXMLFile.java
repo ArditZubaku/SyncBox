@@ -1,18 +1,16 @@
 package com.zubaku.utils;
 
 public enum FXMLFile {
-    LoginWindow("LoginWindow.fxml"),
-    MainWindow("MainWindow.fxml"),
-    OptionsWindow("OptionsWindow.fxml");
+  LoginWindow("LoginWindow.fxml"),
+  MainWindow("MainWindow.fxml"),
+  OptionsWindow("OptionsWindow.fxml");
 
-    private final String fxmlFile;
+  private final String fxmlFile;
 
-    FXMLFile(String fxmlFile) {
-        this.fxmlFile = fxmlFile;
-    }
+  FXMLFile(String fxmlFile) { this.fxmlFile = fxmlFile; }
 
-    @Override
-    public String toString() {
-        return fxmlFile;
-    }
+  @Override
+  public String toString() {
+    return fxmlFile;
+  }
 }

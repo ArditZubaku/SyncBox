@@ -9,27 +9,24 @@ import javafx.scene.web.WebView;
 
 public class MainWindowController extends BaseController {
 
-    @FXML
-    private TableView<?> emailTableView;
+  @FXML private TableView<?> emailTableView;
 
-    @FXML
-    private WebView emailWebView;
+  @FXML private WebView emailWebView;
 
-    @FXML
-    private TreeView<?> emailsTreeView;
+  @FXML private TreeView<?> emailsTreeView;
 
-    public MainWindowController(EmailProcessor emailProcessor, ViewProcessor viewProcessor, String fxmlName) {
-        super(emailProcessor, viewProcessor, fxmlName);
-    }
+  public MainWindowController(EmailProcessor emailProcessor,
+                              ViewProcessor viewProcessor, String fxmlName) {
+    super(emailProcessor, viewProcessor, fxmlName);
+  }
 
-    @FXML
-    void optionsAction() {
-        viewProcessor.showOptionsWindow();
-    }
+  @FXML
+  void optionsAction() {
+    viewProcessor.showOptionsWindow();
+  }
 
-    @FXML
-    void addAccountAction() {
-        viewProcessor.showLoginWindow();
-    }
-
+  @FXML
+  void addAccountAction() {
+    viewProcessor.showLoginWindow();
+  }
 }
