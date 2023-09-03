@@ -24,6 +24,16 @@ public class EmailTreeItem<String> extends TreeItem<String> {
   }
 
   public void addEmail(Message message) throws MessagingException {
+    EmailMessage emailMessage = fetchMessage(message);
+    emailMessages.add(emailMessage);
+  }
+
+  public void addEmailToTop(Message message) throws MessagingException {
+    EmailMessage emailMessage = fetchMessage(message);
+    emailMessages.add(0, emailMessage);
+  }
+
+  private EmailMessage fetchMessage(Message message) throws MessagingException {
     boolean isRead = message.getFlags().contains(Flags.Flag.SEEN);
 
     EmailMessage emailMessage = new EmailMessage(
@@ -31,18 +41,15 @@ public class EmailTreeItem<String> extends TreeItem<String> {
         message.getRecipients(MimeMessage.RecipientType.TO)[0].toString(),
         message.getSize(), message.getSentDate(), isRead, message);
 
-    emailMessages.add(emailMessage);
-
     if (!isRead)
       incrementUnreadMessagesCount();
 
-    System.out.println("Added email to folder: " + name + " - "
-                       + "Subject: " + emailMessage.getSubject());
+    return emailMessage;
   }
 
   private void updateName() {
     if (unreadMessages > 0) {
-      this.setValue((String) (name + "(" + unreadMessages + ")"));
+      this.setValue((String)(name + "(" + unreadMessages + ")"));
     } else {
       this.setValue(name);
     }
