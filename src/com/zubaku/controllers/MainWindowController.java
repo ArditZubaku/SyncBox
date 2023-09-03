@@ -5,6 +5,7 @@ import com.zubaku.models.EmailSize;
 import com.zubaku.models.EmailTreeItem;
 import com.zubaku.processors.EmailProcessor;
 import com.zubaku.processors.ViewProcessor;
+import com.zubaku.services.MessageRendererService;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -32,6 +33,8 @@ public class MainWindowController
 
   @FXML private TreeView<String> emailsTreeView;
 
+  private MessageRendererService messageRendererService;
+
   public MainWindowController(EmailProcessor emailProcessor,
                               ViewProcessor viewProcessor, String fxmlName) {
     super(emailProcessor, viewProcessor, fxmlName);
@@ -43,6 +46,8 @@ public class MainWindowController
     setUpEmailsTableView();
     setUpSelectedFolder();
     setUpUnreadEmailsAsBold();
+    setUpMessageRendererService();
+    setUpSelectedEmailMessage();
   }
 
   @FXML
@@ -99,6 +104,24 @@ public class MainWindowController
             }
           }
         };
+      }
+    });
+  }
+
+  private void setUpMessageRendererService() {
+    messageRendererService =
+        new MessageRendererService(emailWebView.getEngine());
+  }
+
+  private void setUpSelectedEmailMessage() {
+    emailsTableView.setOnMouseClicked(event -> {
+      EmailMessage emailMessage =
+          emailsTableView.getSelectionModel().getSelectedItem();
+      if (emailMessage != null) {
+        messageRendererService.setEmailMessage(emailMessage);
+        // Start method can be called only once, that's why we call the restart
+        // method
+        messageRendererService.restart();
       }
     });
   }
