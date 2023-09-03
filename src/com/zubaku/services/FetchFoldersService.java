@@ -66,8 +66,7 @@ public class FetchFoldersService extends Service<Void> {
                 folder.open(Folder.READ_WRITE);
                 int folderSize = folder.getMessageCount();
                 for (int i = folderSize; i > 0; i--) {
-                  String subject = folder.getMessage(i).getSubject();
-                  System.out.println(subject);
+                  treeItem.addEmail(folder.getMessage(i));
                 }
                 // Try with resources
                 // Automatically closes the folder when done
