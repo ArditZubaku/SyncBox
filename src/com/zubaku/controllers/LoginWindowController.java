@@ -44,7 +44,7 @@ public class LoginWindowController
       // Start will do all the background tasks
       service.start();
       // After finishing the tasks
-            service.setOnSucceeded(event -> {
+      service.setOnSucceeded(event -> {
         LoginResult result = service.getValue();
         switch (result) {
                     case SUCCESS -> {
