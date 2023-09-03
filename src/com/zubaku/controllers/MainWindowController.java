@@ -1,6 +1,7 @@
 package com.zubaku.controllers;
 
 import com.zubaku.models.EmailMessage;
+import com.zubaku.models.EmailSize;
 import com.zubaku.models.EmailTreeItem;
 import com.zubaku.processors.EmailProcessor;
 import com.zubaku.processors.ViewProcessor;
@@ -24,7 +25,7 @@ public class MainWindowController
   @FXML private TableColumn<EmailMessage, String> senderColumn;
   @FXML private TableColumn<EmailMessage, String> subjectColumn;
   @FXML private TableColumn<EmailMessage, String> recipientColumn;
-  @FXML private TableColumn<EmailMessage, Integer> sizeColumn;
+  @FXML private TableColumn<EmailMessage, EmailSize> sizeColumn;
   @FXML private TableColumn<EmailMessage, Date> dateColumn;
 
   @FXML private WebView emailWebView;
