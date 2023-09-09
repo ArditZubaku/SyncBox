@@ -77,12 +77,13 @@ public class MainWindowController
 
   private void setUpSelectedFolder() {
     emailsTreeView.setOnMouseClicked(event -> {
-      EmailTreeItem<String> treeItem =
+      EmailTreeItem<String> folder =
           (EmailTreeItem<String>)emailsTreeView.getSelectionModel()
               .getSelectedItem();
       // Checking for null pointer exception
-      if (treeItem != null) {
-        emailsTableView.setItems(treeItem.getEmailMessages());
+      if (folder != null) {
+        emailProcessor.setSelectedFolder(folder);
+        emailsTableView.setItems(folder.getEmailMessages());
       }
     });
   }
@@ -118,6 +119,12 @@ public class MainWindowController
       EmailMessage emailMessage =
           emailsTableView.getSelectionModel().getSelectedItem();
       if (emailMessage != null) {
+        emailProcessor.setSelectedEmailMessage(emailMessage);
+
+        if (!emailMessage.isRead()){
+          emailProcessor.setRead();
+        }
+
         messageRendererService.setEmailMessage(emailMessage);
         // Start method can be called only once, that's why we call the restart
         // method
