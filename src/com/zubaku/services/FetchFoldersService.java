@@ -71,14 +71,10 @@ public class FetchFoldersService extends Service<Void> {
           @Override
           protected Void call() throws MessagingException {
             if (folder.getType() != Folder.HOLDS_FOLDERS) {
-              try (folder) {
-                folder.open(Folder.READ_WRITE);
-                int folderSize = folder.getMessageCount();
-                for (int i = folderSize; i > 0; i--) {
-                  treeItem.addEmail(folder.getMessage(i));
-                }
-                // Try with resources
-                // Automatically closes the folder when done
+              folder.open(Folder.READ_WRITE);
+              int folderSize = folder.getMessageCount();
+              for (int i = folderSize; i > 0; i--) {
+                treeItem.addEmail(folder.getMessage(i));
               }
             }
             return null;
@@ -94,8 +90,9 @@ public class FetchFoldersService extends Service<Void> {
     folder.addMessageCountListener(new MessageCountListener() {
       @Override
       public void messagesAdded(MessageCountEvent messageCountEvent) {
-        for (int i = 0; i < messageCountEvent.getMessages().length ; i++) {
+        for (int i = 0; i < messageCountEvent.getMessages().length; i++) {
           try {
+            System.out.println("Message added event");
             // Getting the latest messages
             Message message = folder.getMessage(folder.getMessageCount() - i);
             // Adding them to the top of the TreeView
