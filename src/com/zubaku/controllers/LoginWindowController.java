@@ -43,7 +43,7 @@ public class LoginWindowController
       LoginService service = new LoginService(account, emailProcessor);
       // Start will do all the background tasks
       service.start();
-      // After finishing the tasks
+    // After finishing the tasks
       service.setOnSucceeded(event -> {
         LoginResult result = service.getValue();
         switch (result) {

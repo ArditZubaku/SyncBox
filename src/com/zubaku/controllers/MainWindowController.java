@@ -11,16 +11,17 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
 
 public class MainWindowController
     extends BaseController implements Initializable {
+
+  private final MenuItem markUnreadMenuItem = new MenuItem("Mark as unread");
+  private final MenuItem deleteEmailMessageMenuItem =
+      new MenuItem("Delete email message");
 
   @FXML private TableView<EmailMessage> emailsTableView;
   @FXML private TableColumn<EmailMessage, String> senderColumn;
@@ -48,6 +49,7 @@ public class MainWindowController
     setUpUnreadEmailsAsBold();
     setUpMessageRendererService();
     setUpSelectedEmailMessage();
+    setUpContextMenus();
   }
 
   @FXML
@@ -73,6 +75,9 @@ public class MainWindowController
         new PropertyValueFactory<>("recipient"));
     sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
     dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+    emailsTableView.setContextMenu(
+        new ContextMenu(markUnreadMenuItem, deleteEmailMessageMenuItem));
   }
 
   private void setUpSelectedFolder() {
@@ -121,7 +126,7 @@ public class MainWindowController
       if (emailMessage != null) {
         emailProcessor.setSelectedEmailMessage(emailMessage);
 
-        if (!emailMessage.isRead()){
+        if (!emailMessage.isRead()) {
           emailProcessor.setRead();
         }
 
@@ -130,6 +135,14 @@ public class MainWindowController
         // method
         messageRendererService.restart();
       }
+    });
+  }
+
+  private void setUpContextMenus() {
+    markUnreadMenuItem.setOnAction(event -> { emailProcessor.setUnread(); });
+    deleteEmailMessageMenuItem.setOnAction(event -> {
+      emailProcessor.deleteSelectedEmailMessage();
+      emailWebView.getEngine().loadContent("");
     });
   }
 }

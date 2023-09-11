@@ -7,31 +7,34 @@ import com.zubaku.services.FetchFoldersService;
 import com.zubaku.services.FolderUpdaterService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Flags;
 import javax.mail.Folder;
 
+// To manage email actions
+// Folder handling
 public class EmailProcessor {
-  // To manage email actions
-  // Folder handling
+  private static final Logger LOGGER =
+      Logger.getLogger(FolderUpdaterService.class.getName());
 
   // To update the view we need to know what was selected
   private EmailMessage selectedEmailMessage;
   private EmailTreeItem<String> selectedFolder;
 
-  private FolderUpdaterService folderUpdaterService;
-
-  private EmailTreeItem<String> foldersRoot = new EmailTreeItem<>("");
+  private final EmailTreeItem<String> foldersRoot = new EmailTreeItem<>("");
 
   public EmailTreeItem<String> getFoldersRoot() { return foldersRoot; }
 
   // List of all the folders of all accounts
-  private List<Folder> foldersList = new ArrayList<>();
+  private final List<Folder> foldersList = new ArrayList<>();
 
   public List<Folder> getFoldersList() { return foldersList; }
 
   public EmailProcessor() {
-    this.folderUpdaterService = new FolderUpdaterService(foldersList);
-    this.folderUpdaterService.start();
+    FolderUpdaterService folderUpdaterService =
+        new FolderUpdaterService(foldersList);
+    folderUpdaterService.start();
   }
 
   public EmailMessage getSelectedEmailMessage() { return selectedEmailMessage; }
@@ -60,7 +63,27 @@ public class EmailProcessor {
       selectedEmailMessage.getMessage().setFlag(Flags.Flag.SEEN, true);
       selectedFolder.decrementUnreadMessagesCount();
     } catch (Exception e) {
-      e.printStackTrace();
+      LOGGER.log(Level.SEVERE, "Error setting message to read", e);
+    }
+  }
+
+  public void setUnread() {
+    try {
+      selectedEmailMessage.setRead(false);
+      selectedEmailMessage.getMessage().setFlag(Flags.Flag.SEEN, false);
+      selectedFolder.incrementUnreadMessagesCount();
+    } catch (Exception e) {
+      LOGGER.log(Level.SEVERE, "Error setting message to unread", e);
+    }
+  }
+
+  public void deleteSelectedEmailMessage() {
+    try {
+      selectedEmailMessage.getMessage().setFlag(Flags.Flag.DELETED, true);
+//      selectedEmailMessage.getMessage().getFolder().expunge();
+      selectedFolder.getEmailMessages().remove(selectedEmailMessage);
+    } catch (Exception e) {
+      LOGGER.log(Level.SEVERE, "Error deleting selected email message", e);
     }
   }
 }
