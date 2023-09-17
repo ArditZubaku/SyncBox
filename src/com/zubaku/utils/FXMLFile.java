@@ -4,7 +4,7 @@ public enum FXMLFile {
   LoginWindow("LoginWindow.fxml"),
   MainWindow("MainWindow.fxml"),
   OptionsWindow("OptionsWindow.fxml"),
-  ComposeMessageController("ComposeMessageController.fxml");
+  ComposeMessageController("ComposeMessageWindow.fxml");
 
   private final String fxmlFile;
 

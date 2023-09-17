@@ -62,6 +62,11 @@ public class MainWindowController
     viewProcessor.showLoginWindow();
   }
 
+  @FXML
+  void composeMessageAction() {
+    viewProcessor.showComposeMessageWindow();
+  }
+
   private void setUpEmailsTreeView() {
     emailsTreeView.setRoot(emailProcessor.getFoldersRoot());
     // Hide the root since it is just an empty element
