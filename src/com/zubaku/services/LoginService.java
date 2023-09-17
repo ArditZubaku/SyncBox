@@ -44,6 +44,7 @@ public class LoginService extends Service<LoginResult> {
     try {
       Session session =
           Session.getInstance(account.getProperties(), authenticator);
+      account.setSession(session);
       Store store = session.getStore("imaps");
       store.connect(account.getProperties().getProperty("incomingHost"),
                     account.getEmail(), account.getPassword());

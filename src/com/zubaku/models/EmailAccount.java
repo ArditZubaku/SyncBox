@@ -1,6 +1,9 @@
 package com.zubaku.models;
 
+import static com.zubaku.utils.Constants.*;
+
 import java.util.Properties;
+import javax.mail.Session;
 import javax.mail.Store;
 
 public class EmailAccount {
@@ -9,18 +12,20 @@ public class EmailAccount {
   private Properties properties;
   // For storing and retrieving messages
   private Store store;
+  private Session session;
 
   public EmailAccount(String email, String password) {
     this.email = email;
     this.password = password;
     properties = new Properties();
-    properties.put("incomingHost", "imap.gmail.com");
-    properties.put("mail.store.protocol", "imaps");
-
-    properties.put("mail.transport.protocol", "smtps");
-    properties.put("mail.smtps.host", "smtp.gmail.com");
-    properties.put("mail.smtps.auth", "true");
-    properties.put("outgoingHost", "smtp.gmail.com");
+    properties.put(IncomingHost.getValue(), IncomingHostValue.getValue());
+    properties.put(MailStoreProtocol.getValue(),
+                   MailStoreProtocolValue.getValue());
+    properties.put(MailTransportProtocol.getValue(),
+                   MailTransportProtocolValue.getValue());
+    properties.put(MailSmtpsHost.getValue(), MailSmtpsHostValue.getValue());
+    properties.put(MailSmtpsAuth.getValue(), MailSmtpsAuthValue.getValue());
+    properties.put(OutgoingHost.getValue(), OutgoingHostValue.getValue());
   }
 
   public String getEmail() { return email; }
@@ -36,6 +41,10 @@ public class EmailAccount {
   public Store getStore() { return store; }
 
   public void setStore(Store store) { this.store = store; }
+
+  public Session getSession() { return session; }
+
+  public void setSession(Session session) { this.session = session; }
 
   @Override
   public String toString() {
