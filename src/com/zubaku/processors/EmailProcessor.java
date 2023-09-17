@@ -78,9 +78,11 @@ public class EmailProcessor {
   }
 
   public void deleteSelectedEmailMessage() {
+    // TODO: Edit this method because it seems like setting the flag to DELETED
+    // is working Workaround: send the email to the bin/trash folder!
     try {
       selectedEmailMessage.getMessage().setFlag(Flags.Flag.DELETED, true);
-//      selectedEmailMessage.getMessage().getFolder().expunge();
+      //      selectedEmailMessage.getMessage().getFolder().expunge();
       selectedFolder.getEmailMessages().remove(selectedEmailMessage);
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, "Error deleting selected email message", e);

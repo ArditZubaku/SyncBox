@@ -1,9 +1,6 @@
 package com.zubaku.processors;
 
-import com.zubaku.controllers.BaseController;
-import com.zubaku.controllers.LoginWindowController;
-import com.zubaku.controllers.MainWindowController;
-import com.zubaku.controllers.OptionsWindowController;
+import com.zubaku.controllers.*;
 import com.zubaku.utils.ColorTheme;
 import com.zubaku.utils.FXMLFile;
 import com.zubaku.utils.FontSize;
@@ -68,6 +65,14 @@ public class ViewProcessor {
 
     BaseController controller = new OptionsWindowController(
         emailProcessor, this, FXMLFile.OptionsWindow.toString());
+    initializeStage(controller);
+  }
+
+  public void showComposeMessageWindow() {
+    System.out.println("showComposeMessage invoked.");
+
+    BaseController controller = new ComposeMessageController(
+        emailProcessor, this, FXMLFile.ComposeMessageController.toString());
     initializeStage(controller);
   }
 
