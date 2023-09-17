@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javax.mail.Flags;
 import javax.mail.Folder;
 
@@ -21,13 +23,18 @@ public class EmailProcessor {
   // To update the view we need to know what was selected
   private EmailMessage selectedEmailMessage;
   private EmailTreeItem<String> selectedFolder;
-
   private final EmailTreeItem<String> foldersRoot = new EmailTreeItem<>("");
+  // List of all the folders of all accounts
+  private final List<Folder> foldersList = new ArrayList<>();
+  // List of all email accounts
+  private final ObservableList<EmailAccount> emailAccounts =
+      FXCollections.observableArrayList();
 
   public EmailTreeItem<String> getFoldersRoot() { return foldersRoot; }
 
-  // List of all the folders of all accounts
-  private final List<Folder> foldersList = new ArrayList<>();
+  public ObservableList<EmailAccount> getEmailAccounts() {
+    return emailAccounts;
+  }
 
   public List<Folder> getFoldersList() { return foldersList; }
 
@@ -50,6 +57,7 @@ public class EmailProcessor {
   }
 
   public void addEmailAccount(EmailAccount account) {
+    emailAccounts.add(account);
     EmailTreeItem<String> treeItem = new EmailTreeItem<>(account.getEmail());
     FetchFoldersService service =
         new FetchFoldersService(account.getStore(), treeItem, foldersList);
