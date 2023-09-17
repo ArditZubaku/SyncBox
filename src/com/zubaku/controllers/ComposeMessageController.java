@@ -3,6 +3,8 @@ package com.zubaku.controllers;
 import com.zubaku.models.EmailAccount;
 import com.zubaku.processors.EmailProcessor;
 import com.zubaku.processors.ViewProcessor;
+import com.zubaku.services.EmailSenderService;
+import com.zubaku.utils.EmailSendingResult;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -11,6 +13,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.Stage;
 
 public class ComposeMessageController
     extends BaseController implements Initializable {
@@ -33,8 +36,22 @@ public class ComposeMessageController
 
   @FXML
   void sendButtonAction() {
-    System.out.println(
-        "Send button action called on ComposeMessageController!");
+    EmailSenderService emailSenderService = new EmailSenderService(
+        emailAccountChoice.getValue(), subjectTextField.getText(),
+        recipientTextField.getText(), htmlEditor.getHtmlText());
+    emailSenderService.start();
+    emailSenderService.setOnSucceeded(event -> {
+      EmailSendingResult result = emailSenderService.getValue();
+
+      switch (result) {
+            case SUCCESS -> {
+                Stage stage = (Stage) errorLabel.getScene().getWindow();
+                viewProcessor.closeStage(stage);
+            }
+          case FAILED_BY_PROVIDER -> errorLabel.setText("Provider error!");
+          case FAILED_BY_UNEXPECTED_ERROR -> errorLabel.setText("Unexpected error!");
+        }
+    });
   }
 
   @Override
