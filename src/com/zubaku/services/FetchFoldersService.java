@@ -1,6 +1,7 @@
 package com.zubaku.services;
 
 import com.zubaku.models.EmailTreeItem;
+import com.zubaku.utils.IconResolver;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ public class FetchFoldersService extends Service<Void> {
   private final Store store;
   private final EmailTreeItem<String> foldersRoot;
   private final List<Folder> foldersList;
+  private final IconResolver iconResolver = new IconResolver();
 
   public FetchFoldersService(Store store, EmailTreeItem<String> foldersRoot,
                              List<Folder> foldersList) {
@@ -52,6 +54,7 @@ public class FetchFoldersService extends Service<Void> {
     for (Folder folder : folders) {
       foldersList.add(folder);
       EmailTreeItem<String> treeItem = new EmailTreeItem<>(folder.getName());
+      treeItem.setGraphic(iconResolver.getIconForFolder(folder.getName()));
       foldersRoot.getChildren().add(treeItem);
       foldersRoot.setExpanded(true);
 

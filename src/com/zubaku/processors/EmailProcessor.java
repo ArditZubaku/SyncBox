@@ -5,6 +5,7 @@ import com.zubaku.models.EmailMessage;
 import com.zubaku.models.EmailTreeItem;
 import com.zubaku.services.FetchFoldersService;
 import com.zubaku.services.FolderUpdaterService;
+import com.zubaku.utils.IconResolver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,6 +30,7 @@ public class EmailProcessor {
   // List of all email accounts
   private final ObservableList<EmailAccount> emailAccounts =
       FXCollections.observableArrayList();
+  private IconResolver iconResolver = new IconResolver();
 
   public EmailTreeItem<String> getFoldersRoot() { return foldersRoot; }
 
@@ -59,6 +61,7 @@ public class EmailProcessor {
   public void addEmailAccount(EmailAccount account) {
     emailAccounts.add(account);
     EmailTreeItem<String> treeItem = new EmailTreeItem<>(account.getEmail());
+    treeItem.setGraphic(iconResolver.getIconForFolder(account.getEmail()));
     FetchFoldersService service =
         new FetchFoldersService(account.getStore(), treeItem, foldersList);
     service.start();

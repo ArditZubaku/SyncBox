@@ -3,6 +3,7 @@ package com.zubaku.utils;
 public enum Paths {
 
   ViewPackage("/com/zubaku/view/"),
+  IconsPackage("/com/zubaku/view/icons/"),
 
   ThemeLIGHT("css/themeLight.css"),
   ThemeDARK("css/themeDark.css"),

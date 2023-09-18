@@ -11,4 +11,5 @@ module JAVAFX.PROJEKTI {
   opens com.zubaku.application;
   opens com.zubaku.processors;
   opens com.zubaku.models;
+    opens com.zubaku.utils;
 }

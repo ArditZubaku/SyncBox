@@ -33,8 +33,8 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <TreeView fx:id="emailsTreeView" layoutY="28.0" prefHeight="573.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="28.0" />
-        <TableView fx:id="emailsTableView" layoutX="200.0" layoutY="28.0" prefHeight="200.0" prefWidth="676.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+        <TreeView fx:id="emailsTreeView" layoutY="28.0" prefHeight="569.0" prefWidth="252.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="28.0" />
+        <TableView fx:id="emailsTableView" layoutX="252.0" layoutY="28.0" prefHeight="200.0" prefWidth="620.0" AnchorPane.leftAnchor="252.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
             <columns>
                 <TableColumn fx:id="senderColumn" prefWidth="136.0" text="Sender" />
                 <TableColumn fx:id="subjectColumn" prefWidth="152.0" text="Subject" />
@@ -46,6 +46,6 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-        <WebView fx:id="emailWebView" layoutX="200.0" layoutY="228.0" prefHeight="372.0" prefWidth="671.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="228.0" />
+        <WebView fx:id="emailWebView" layoutX="252.0" layoutY="228.0" prefHeight="369.0" prefWidth="618.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="252.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="228.0" />
     </children>
 </AnchorPane>
