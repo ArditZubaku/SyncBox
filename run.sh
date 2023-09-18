@@ -1,0 +1,1 @@
+java --module-path /home/zubaku92/Downloads/openjfx-19.0.2.1_linux-x64_bin-sdk/javafx-sdk-19.0.2.1/lib --add-modules javafx.fxml,javafx.controls,javafx.graphics,javafx.web,java.logging,java.mail,activation -jar out/artifacts/JAVAFX_PROJEKTI_jar/JAVAFX_PROJEKTI.jar
