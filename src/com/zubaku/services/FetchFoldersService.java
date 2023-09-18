@@ -2,6 +2,8 @@ package com.zubaku.services;
 
 import com.zubaku.models.EmailTreeItem;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javax.mail.Folder;
@@ -12,10 +14,12 @@ import javax.mail.event.MessageCountEvent;
 import javax.mail.event.MessageCountListener;
 
 public class FetchFoldersService extends Service<Void> {
+  private static final Logger LOGGER =
+      Logger.getLogger(FetchFoldersService.class.getName());
 
-  private Store store;
-  private EmailTreeItem<String> foldersRoot;
-  private List<Folder> foldersList;
+  private final Store store;
+  private final EmailTreeItem<String> foldersRoot;
+  private final List<Folder> foldersList;
 
   public FetchFoldersService(Store store, EmailTreeItem<String> foldersRoot,
                              List<Folder> foldersList) {
@@ -108,7 +112,7 @@ public class FetchFoldersService extends Service<Void> {
         try {
           System.out.println("Message removed event: " + messageCountEvent);
         } catch (Exception e) {
-          System.out.println(e.getMessage());
+          LOGGER.log(Level.INFO, "Error removing message!" + e);
         }
       }
     });

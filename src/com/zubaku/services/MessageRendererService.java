@@ -15,11 +15,10 @@ import javax.mail.Multipart;
 public class MessageRendererService extends Service<Void> {
   private static final Logger LOGGER =
       Logger.getLogger(MessageRendererService.class.getName());
-
-  private EmailMessage emailMessage;
   private final WebEngine webEngine;
   // Holds the content that will be rendered by the WebEngine
   private final StringBuffer stringBuffer;
+  private EmailMessage emailMessage;
 
   public MessageRendererService(WebEngine webEngine) {
     this.webEngine = webEngine;
@@ -32,10 +31,10 @@ public class MessageRendererService extends Service<Void> {
   }
 
   @Override
-  protected Task createTask() {
-    return new Task() {
+  protected Task<Void> createTask() {
+    return new Task<>() {
       @Override
-      protected Object call() throws Exception {
+      protected Void call() {
         try {
           loadEmailContent();
         } catch (Exception e) {

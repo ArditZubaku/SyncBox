@@ -8,13 +8,13 @@ import javax.mail.Message;
 
 public class EmailMessage {
 
-  private SimpleStringProperty subject;
-  private SimpleStringProperty sender;
-  private SimpleStringProperty recipient;
-  private SimpleObjectProperty<EmailSize> size;
-  private SimpleObjectProperty<Date> date;
+  private final SimpleStringProperty subject;
+  private final SimpleStringProperty sender;
+  private final SimpleStringProperty recipient;
+  private final SimpleObjectProperty<EmailSize> size;
+  private final SimpleObjectProperty<Date> date;
   private boolean isRead;
-  private Message message;
+  private final Message message;
 
   public EmailMessage(String subject, String sender, String recipient, int size,
                       Date date, boolean isRead, Message message) {
