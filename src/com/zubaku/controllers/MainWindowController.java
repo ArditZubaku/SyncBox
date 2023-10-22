@@ -16,12 +16,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
 
-public class MainWindowController
-    extends BaseController implements Initializable {
+public class MainWindowController extends BaseController implements Initializable {
 
   private final MenuItem markUnreadMenuItem = new MenuItem("Mark as unread");
-  private final MenuItem deleteEmailMessageMenuItem =
-      new MenuItem("Delete email message");
+  private final MenuItem deleteEmailMessageMenuItem = new MenuItem("Delete email message");
+  private final MenuItem showEmailMessageDetailsMenuItem =
+      new MenuItem("Show email message details");
 
   @FXML private TableView<EmailMessage> emailsTableView;
   @FXML private TableColumn<EmailMessage, String> senderColumn;
@@ -36,8 +36,8 @@ public class MainWindowController
 
   private MessageRendererService messageRendererService;
 
-  public MainWindowController(EmailProcessor emailProcessor,
-                              ViewProcessor viewProcessor, String fxmlName) {
+  public MainWindowController(
+      EmailProcessor emailProcessor, ViewProcessor viewProcessor, String fxmlName) {
     super(emailProcessor, viewProcessor, fxmlName);
   }
 
@@ -76,78 +76,86 @@ public class MainWindowController
   private void setUpEmailsTableView() {
     senderColumn.setCellValueFactory(new PropertyValueFactory<>("sender"));
     subjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
-    recipientColumn.setCellValueFactory(
-        new PropertyValueFactory<>("recipient"));
+    recipientColumn.setCellValueFactory(new PropertyValueFactory<>("recipient"));
     sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
     dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
     emailsTableView.setContextMenu(
-        new ContextMenu(markUnreadMenuItem, deleteEmailMessageMenuItem));
+        new ContextMenu(
+            markUnreadMenuItem, deleteEmailMessageMenuItem, showEmailMessageDetailsMenuItem));
   }
 
   private void setUpSelectedFolder() {
-    emailsTreeView.setOnMouseClicked(event -> {
-      EmailTreeItem<String> folder =
-          (EmailTreeItem<String>)emailsTreeView.getSelectionModel()
-              .getSelectedItem();
-      // Checking for null pointer exception
-      if (folder != null) {
-        emailProcessor.setSelectedFolder(folder);
-        emailsTableView.setItems(folder.getEmailMessages());
-      }
-    });
+    emailsTreeView.setOnMouseClicked(
+        event -> {
+          EmailTreeItem<String> folder =
+              (EmailTreeItem<String>) emailsTreeView.getSelectionModel().getSelectedItem();
+          // Checking for null pointer exception
+          if (folder != null) {
+            emailProcessor.setSelectedFolder(folder);
+            emailsTableView.setItems(folder.getEmailMessages());
+          }
+        });
   }
 
   private void setUpUnreadEmailsAsBold() {
-    emailsTableView.setRowFactory(new Callback<>() {
-      @Override
-      public TableRow<EmailMessage> call(TableView<EmailMessage> param) {
-        return new TableRow<>() {
+    emailsTableView.setRowFactory(
+        new Callback<>() {
           @Override
-          protected void updateItem(EmailMessage item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item != null) {
-              if (item.isRead()) {
-                setStyle("");
-              } else {
-                setStyle("-fx-font-weight: bold");
+          public TableRow<EmailMessage> call(TableView<EmailMessage> param) {
+            return new TableRow<>() {
+              @Override
+              protected void updateItem(EmailMessage item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                  if (item.isRead()) {
+                    setStyle("");
+                  } else {
+                    setStyle("-fx-font-weight: bold");
+                  }
+                }
               }
-            }
+            };
           }
-        };
-      }
-    });
+        });
   }
 
   private void setUpMessageRendererService() {
-    messageRendererService =
-        new MessageRendererService(emailWebView.getEngine());
+    messageRendererService = new MessageRendererService(emailWebView.getEngine());
   }
 
   private void setUpSelectedEmailMessage() {
-    emailsTableView.setOnMouseClicked(event -> {
-      EmailMessage emailMessage =
-          emailsTableView.getSelectionModel().getSelectedItem();
-      if (emailMessage != null) {
-        emailProcessor.setSelectedEmailMessage(emailMessage);
+    emailsTableView.setOnMouseClicked(
+        event -> {
+          EmailMessage emailMessage = emailsTableView.getSelectionModel().getSelectedItem();
+          if (emailMessage != null) {
+            emailProcessor.setSelectedEmailMessage(emailMessage);
 
-        if (!emailMessage.isRead()) {
-          emailProcessor.setRead();
-        }
+            if (!emailMessage.isRead()) {
+              emailProcessor.setRead();
+            }
 
-        messageRendererService.setEmailMessage(emailMessage);
-        // Start method can be called only once, that's why we call the restart
-        // method
-        messageRendererService.restart();
-      }
-    });
+            messageRendererService.setEmailMessage(emailMessage);
+            // Start method can be called only once, that's why we call the restart
+            // method
+            messageRendererService.restart();
+          }
+        });
   }
 
   private void setUpContextMenus() {
-    markUnreadMenuItem.setOnAction(event -> { emailProcessor.setUnread(); });
-    deleteEmailMessageMenuItem.setOnAction(event -> {
-      emailProcessor.deleteSelectedEmailMessage();
-      emailWebView.getEngine().loadContent("");
-    });
+    markUnreadMenuItem.setOnAction(
+        event -> {
+          emailProcessor.setUnread();
+        });
+    deleteEmailMessageMenuItem.setOnAction(
+        event -> {
+          emailProcessor.deleteSelectedEmailMessage();
+          emailWebView.getEngine().loadContent("");
+        });
+    showEmailMessageDetailsMenuItem.setOnAction(
+        event -> {
+          viewProcessor.showEmailDetailsWindow();
+        });
   }
 }

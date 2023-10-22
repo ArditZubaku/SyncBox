@@ -17,8 +17,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ViewProcessor {
-  private static final Logger LOGGER =
-      Logger.getLogger(ViewProcessor.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ViewProcessor.class.getName());
 
   private final EmailProcessor emailProcessor;
   private final List<Stage> activeStages;
@@ -33,29 +32,35 @@ public class ViewProcessor {
     this.activeStages = new ArrayList<>();
   }
 
-  public ColorTheme getColorTheme() { return colorTheme; }
+  public ColorTheme getColorTheme() {
+    return colorTheme;
+  }
 
   public void setColorTheme(ColorTheme colorTheme) {
     this.colorTheme = colorTheme;
   }
 
-  public FontSize getFontSize() { return fontSize; }
+  public FontSize getFontSize() {
+    return fontSize;
+  }
 
-  public void setFontSize(FontSize fontSize) { this.fontSize = fontSize; }
+  public void setFontSize(FontSize fontSize) {
+    this.fontSize = fontSize;
+  }
 
   public void showLoginWindow() {
     System.out.println("showLoginWindow invoked.");
 
-    BaseController controller = new LoginWindowController(
-        emailProcessor, this, FXMLFile.LoginWindow.toString());
+    BaseController controller =
+        new LoginWindowController(emailProcessor, this, FXMLFile.LoginWindow.toString());
     initializeStage(controller);
   }
 
   public void showMainWindow() {
     System.out.println("showMainWindow invoked.");
 
-    BaseController controller = new MainWindowController(
-        emailProcessor, this, FXMLFile.MainWindow.toString());
+    BaseController controller =
+        new MainWindowController(emailProcessor, this, FXMLFile.MainWindow.toString());
     initializeStage(controller);
     mainViewInitialized = true;
   }
@@ -63,23 +68,32 @@ public class ViewProcessor {
   public void showOptionsWindow() {
     System.out.println("showOptionsWindow invoked.");
 
-    BaseController controller = new OptionsWindowController(
-        emailProcessor, this, FXMLFile.OptionsWindow.toString());
+    BaseController controller =
+        new OptionsWindowController(emailProcessor, this, FXMLFile.OptionsWindow.toString());
     initializeStage(controller);
   }
 
   public void showComposeMessageWindow() {
     System.out.println("showComposeMessage invoked.");
 
-    BaseController controller = new ComposeMessageController(
-        emailProcessor, this, FXMLFile.ComposeMessageController.toString());
+    BaseController controller =
+        new ComposeMessageController(
+            emailProcessor, this, FXMLFile.ComposeMessageWindow.toString());
+    initializeStage(controller);
+  }
+
+  public void showEmailDetailsWindow() {
+    System.out.println("showEmailDetails invoked.");
+
+    BaseController controller =
+        new EmailDetailsController(emailProcessor, this, FXMLFile.EmailDetailsWindow.toString());
     initializeStage(controller);
   }
 
   public void initializeStage(BaseController controller) {
 
-    FXMLLoader loader = new FXMLLoader(
-        getClass().getResource(Paths.ViewPackage + controller.getFxmlName()));
+    FXMLLoader loader =
+        new FXMLLoader(getClass().getResource(Paths.ViewPackage + controller.getFxmlName()));
     loader.setController(controller);
 
     Parent parent;
@@ -99,7 +113,9 @@ public class ViewProcessor {
     activeStages.add(stage);
   }
 
-  public boolean isMainViewInitialized() { return mainViewInitialized; }
+  public boolean isMainViewInitialized() {
+    return mainViewInitialized;
+  }
 
   public void closeStage(Stage stage) {
     LOGGER.log(Level.INFO, "Closed the stage");
@@ -115,14 +131,16 @@ public class ViewProcessor {
       Scene scene = stage.getScene();
       // handling the CSS
       scene.getStylesheets().clear();
-      scene.getStylesheets().add(Objects
-                                     .requireNonNull(getClass().getResource(
-                                         Paths.getThemeCSSPath(colorTheme)))
-                                     .toExternalForm());
-      scene.getStylesheets().add(Objects
-                                     .requireNonNull(getClass().getResource(
-                                         Paths.getFontCSSPath(fontSize)))
-                                     .toExternalForm());
+      scene
+          .getStylesheets()
+          .add(
+              Objects.requireNonNull(getClass().getResource(Paths.getThemeCSSPath(colorTheme)))
+                  .toExternalForm());
+      scene
+          .getStylesheets()
+          .add(
+              Objects.requireNonNull(getClass().getResource(Paths.getFontCSSPath(fontSize)))
+                  .toExternalForm());
     }
   }
 }
