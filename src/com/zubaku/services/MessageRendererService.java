@@ -11,6 +11,7 @@ import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
 
 public class MessageRendererService extends Service<Void> {
   private static final Logger LOGGER =
@@ -77,6 +78,11 @@ public class MessageRendererService extends Service<Void> {
       } else if (isMultipartType(bodyPartContentType)) {
         Multipart multipart2 = (Multipart)bodyPart.getContent();
         loadMultipartContent(multipart2, stringBuffer);
+      } else if (!isPlainText(bodyPartContentType)) {
+        // Handle the attachments
+        MimeBodyPart mimeBodyPart = (MimeBodyPart)bodyPart;
+        emailMessage.addAttachment(mimeBodyPart);
+
       }
     }
   }
@@ -88,5 +94,9 @@ public class MessageRendererService extends Service<Void> {
 
   private boolean isMultipartType(String contentType) {
     return contentType.contains("multipart");
+  }
+
+  private boolean isPlainText(String contentType) {
+    return contentType.contains("TEXT/PLAIN");
   }
 }

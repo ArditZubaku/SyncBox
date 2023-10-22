@@ -1,10 +1,14 @@
 package com.zubaku.models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeBodyPart;
 
 public class EmailMessage {
 
@@ -15,6 +19,8 @@ public class EmailMessage {
   private final SimpleObjectProperty<Date> date;
   private boolean isRead;
   private final Message message;
+  private final List<MimeBodyPart> attachmentsList = new ArrayList<>();
+  private boolean hasAttachments = false;
 
   public EmailMessage(String subject, String sender, String recipient, int size,
                       Date date, boolean isRead, Message message) {
@@ -42,4 +48,9 @@ public class EmailMessage {
   public void setRead(boolean read) { this.isRead = read; }
 
   public Message getMessage() { return this.message; }
+
+  public void addAttachment(MimeBodyPart mimeBodyPart) {
+    hasAttachments = true;
+    attachmentsList.add(mimeBodyPart);
+  }
 }
