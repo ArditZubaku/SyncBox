@@ -22,7 +22,7 @@ import javax.mail.internet.MimeBodyPart;
 
 public class EmailDetailsController extends BaseController implements Initializable {
   private static final Logger LOGGER = Logger.getLogger(EmailDetailsController.class.getName());
-  private final String DOWNLOADS_FOLDER = System.getProperty("user.home") + "/Downloads/SyncBox/";
+  private final String SYNCBOX_DOWNLOADS_FOLDER = System.getProperty("user.home") + "/Downloads/SyncBox/";
 
   @FXML private Label attachmentsLabel;
 
@@ -54,7 +54,7 @@ public class EmailDetailsController extends BaseController implements Initializa
   }
 
   private void mkDirIfNotExists() {
-    File file = new File(DOWNLOADS_FOLDER);
+    File file = new File(SYNCBOX_DOWNLOADS_FOLDER);
     if (!file.exists()) file.mkdir();
   }
 
@@ -80,7 +80,7 @@ public class EmailDetailsController extends BaseController implements Initializa
     public AttachmentButton(MimeBodyPart mimeBodyPart) throws MessagingException {
       this.mimeBodyPart = mimeBodyPart;
       this.setText(mimeBodyPart.getFileName());
-      this.downloadedFilePath = DOWNLOADS_FOLDER + mimeBodyPart.getFileName();
+      this.downloadedFilePath = SYNCBOX_DOWNLOADS_FOLDER + mimeBodyPart.getFileName();
       this.setOnAction(event -> downloadAttachment());
     }
 
