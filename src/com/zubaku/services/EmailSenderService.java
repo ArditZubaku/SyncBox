@@ -4,30 +4,40 @@ import static com.zubaku.utils.Constants.*;
 
 import com.zubaku.models.EmailAccount;
 import com.zubaku.utils.EmailSendingResult;
+import java.io.File;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 public class EmailSenderService extends Service<EmailSendingResult> {
-  private static final Logger LOGGER =
-      Logger.getLogger(EmailSenderService.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(EmailSenderService.class.getName());
 
   private final EmailAccount account;
   private final String subject;
   private final String recipient;
   private final String content;
+  private final List<File> attachments;
 
-  public EmailSenderService(EmailAccount account, String subject,
-                            String recipient, String content) {
+  public EmailSenderService(
+      EmailAccount account,
+      String subject,
+      String recipient,
+      String content,
+      List<File> attachments) {
     this.account = account;
     this.subject = subject;
     this.recipient = recipient;
     this.content = content;
+    this.attachments = attachments;
   }
 
   @Override
@@ -50,11 +60,25 @@ public class EmailSenderService extends Service<EmailSendingResult> {
           multipart.addBodyPart(messageBody);
           message.setContent(multipart);
 
+          // Add the attachments
+          if (!attachments.isEmpty()) {
+            // TODO: Show the selected attachments
+            for (File file : attachments) {
+              MimeBodyPart mimeBodyPart = new MimeBodyPart();
+              DataSource source = new FileDataSource(file.getAbsolutePath());
+              mimeBodyPart.setDataHandler(new DataHandler(source));
+              mimeBodyPart.setFileName(file.getName());
+
+              multipart.addBodyPart(mimeBodyPart);
+            }
+          }
+
           // Send the email message
           Transport transport = account.getSession().getTransport();
           transport.connect(
               account.getProperties().getProperty(OutgoingHost.getValue()),
-              account.getEmail(), account.getPassword());
+              account.getEmail(),
+              account.getPassword());
           transport.sendMessage(message, message.getAllRecipients());
           transport.close();
 
