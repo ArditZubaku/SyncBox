@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,14 +23,16 @@ public class ViewProcessor {
   private final EmailProcessor emailProcessor;
   private final List<Stage> activeStages;
   public boolean mainViewInitialized = false;
+  public HostServices hostServices;
 
   // View options handling:
   private ColorTheme colorTheme = ColorTheme.LIGHT;
   private FontSize fontSize = FontSize.MEDIUM;
 
-  public ViewProcessor(EmailProcessor emailProcessor) {
+  public ViewProcessor(EmailProcessor emailProcessor, HostServices hostServices) {
     this.emailProcessor = emailProcessor;
     this.activeStages = new ArrayList<>();
+    this.hostServices = hostServices;
   }
 
   public ColorTheme getColorTheme() {

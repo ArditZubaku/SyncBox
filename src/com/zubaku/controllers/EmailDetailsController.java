@@ -4,6 +4,7 @@ import com.zubaku.models.EmailMessage;
 import com.zubaku.processors.EmailProcessor;
 import com.zubaku.processors.ViewProcessor;
 import com.zubaku.services.MessageRendererService;
+import java.awt.*;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,7 +23,8 @@ import javax.mail.internet.MimeBodyPart;
 
 public class EmailDetailsController extends BaseController implements Initializable {
   private static final Logger LOGGER = Logger.getLogger(EmailDetailsController.class.getName());
-  private final String SYNCBOX_DOWNLOADS_FOLDER = System.getProperty("user.home") + "/Downloads/SyncBox/";
+  private final String SYNCBOX_DOWNLOADS_FOLDER =
+      System.getProperty("user.home") + "/Downloads/SyncBox/";
 
   @FXML private Label attachmentsLabel;
 
@@ -85,7 +87,33 @@ public class EmailDetailsController extends BaseController implements Initializa
     }
 
     private void downloadAttachment() {
+      setColor("blue");
       // Since this might be a long going task, we need to put it in a separate thread
+      Service<Void> service = getService();
+      service.setOnSucceeded(
+          event -> {
+            setColor("limegreen");
+            this.setOnMouseEntered(event1 -> this.setText("Open"));
+            this.setOnMouseEntered(
+                event1 -> {
+                  try {
+                    this.setText(mimeBodyPart.getFileName());
+                  } catch (MessagingException e) {
+                    throw new RuntimeException(e);
+                  }
+                });
+            this.setOnAction(
+                event1 -> {
+                  File file = new File(SYNCBOX_DOWNLOADS_FOLDER);
+                  if (file.exists()) {
+                    viewProcessor.hostServices.showDocument(SYNCBOX_DOWNLOADS_FOLDER);
+                  }
+                });
+          });
+      service.setOnFailed(event -> setColor("red"));
+    }
+
+    private Service<Void> getService() {
       Service<Void> service =
           new Service<>() {
             @Override
@@ -101,6 +129,11 @@ public class EmailDetailsController extends BaseController implements Initializa
             }
           };
       service.restart();
+      return service;
+    }
+
+    private void setColor(String color) {
+      this.setStyle("-fx-background-color:" + color);
     }
   }
 }

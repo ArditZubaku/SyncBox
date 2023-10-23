@@ -6,6 +6,7 @@ module JAVAFX.PROJEKTI {
   requires java.logging;
   requires java.mail;
   requires activation;
+  requires java.desktop;
 
   opens com.zubaku.controllers;
   opens com.zubaku.application;
