@@ -3,18 +3,15 @@ package com.zubaku.persistence;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PersistenceAccess {
   private static final Logger LOGGER = Logger.getLogger(PersistenceAccess.class.getName());
   private static final String VALID_ACCOUNTS_LOCATION =
-      Optional.ofNullable(System.getenv("APP_DATA"))
-              .orElseThrow(
-                  () -> new IllegalStateException("APP_DATA environment variable is not set"))
-          + "\\validAccounts.ser";
+      System.getProperty("user.home") + File.separator + ".validAccounts.ser";
 
+  // Called on program startup
   public List<ValidAccount> loadFromPersistence() {
     List<ValidAccount> accounts = new ArrayList<>();
     File file = new File(VALID_ACCOUNTS_LOCATION);
@@ -36,6 +33,7 @@ public class PersistenceAccess {
     return accounts;
   }
 
+  // Called on program stop
   public void saveToPersistence(List<ValidAccount> validAccounts) {
     File file = new File(VALID_ACCOUNTS_LOCATION);
     try (FileOutputStream fos = new FileOutputStream(file);
