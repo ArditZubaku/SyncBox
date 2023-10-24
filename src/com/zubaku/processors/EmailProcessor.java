@@ -30,7 +30,7 @@ public class EmailProcessor {
   // List of all email accounts
   private final ObservableList<EmailAccount> emailAccounts =
       FXCollections.observableArrayList();
-  private IconResolver iconResolver = new IconResolver();
+  private final IconResolver iconResolver = new IconResolver();
 
   public EmailTreeItem<String> getFoldersRoot() { return foldersRoot; }
 
