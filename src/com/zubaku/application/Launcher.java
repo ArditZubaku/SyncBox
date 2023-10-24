@@ -7,29 +7,40 @@ import com.zubaku.processors.EmailProcessor;
 import com.zubaku.processors.ViewProcessor;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.zubaku.services.LoginService;
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.stage.Stage;
 
 public class Launcher extends Application {
-  private PersistenceAccess persistenceAccess = new PersistenceAccess();
-  private EmailProcessor emailProcessor = new EmailProcessor();
+  private final PersistenceAccess persistenceAccess = new PersistenceAccess();
+  private final EmailProcessor emailProcessor = new EmailProcessor();
 
   public static void main(String[] args) {
     launch(args);
   }
 
   @Override
-  public void start(Stage stage) throws Exception {
+  public void start(Stage stage) {
 
     HostServices hostServices = getHostServices();
     ViewProcessor viewProcessor = new ViewProcessor(emailProcessor, hostServices);
-    viewProcessor.showLoginWindow();
-    viewProcessor.updateStyles();
+    List<ValidAccount> validAccounts = persistenceAccess.loadFromPersistence();
+    if (!validAccounts.isEmpty()) {
+      viewProcessor.showMainWindow();
+      for (ValidAccount validAccount : validAccounts ) {
+      EmailAccount emailAccount = new EmailAccount(validAccount.getEmailAddress(), validAccount.getPassword());
+        LoginService loginService = new LoginService(emailAccount, emailProcessor);
+        loginService.start();
+      }
+    } else {
+      viewProcessor.showLoginWindow();
+    }
   }
 
   @Override
-  public void stop() throws Exception {
+  public void stop() {
     List<ValidAccount> validAccounts = new ArrayList<>();
 
     for (EmailAccount emailAccount : emailProcessor.getEmailAccounts()) {
