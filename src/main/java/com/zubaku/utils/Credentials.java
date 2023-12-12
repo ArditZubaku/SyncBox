@@ -1,8 +1,8 @@
 package com.zubaku.utils;
 
 public enum Credentials {
-  EMAIL_ADDRESS("artonzubaku268@gmail.com"),
-  PASSWORD("zkeaczqkndmnceko");
+  EMAIL_ADDRESS(""),
+  PASSWORD("");
 
   public static String EMAIL_ADDRESS() {
     return Credentials.EMAIL_ADDRESS.credential;
